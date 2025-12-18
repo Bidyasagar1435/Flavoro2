@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { MdCancel } from "react-icons/md";
 import ItemCard from "./ItemCard";
+import { IoMdCart } from "react-icons/io";
+
 
 const Cart = () => {
-  //  const [activeCart, setActiveCart] = useState(true)
- 
+  const [activeCart, setActiveCart] = useState(false);
+
   return (
     <>
-      <div className="fixed right-0 top-0 w-full h-full lg:w-[20vw] bg-white px-6">
+      <div
+        className={`fixed right-0 top-0 w-full h-full lg:w-[20vw] bg-white px-6  ${
+          activeCart ? "translate-x-0" : "translate-x-full"
+        }  transition-all duration-500 z-50`}
+      >
         <div className="flex justify-between items-center mt-5">
           <h2 className="text-2xl text-black font-bold">My Order</h2>
-          <MdCancel onClick={(()=>setActiveCart(!activeCart))} className="border p-1 text-xl rounded-md hover:text-red-500 hover:cursor-pointer" />
+          <MdCancel
+            onClick={() => setActiveCart(!activeCart)}
+            className="border p-1 text-xl rounded-md hover:text-red-500 hover:cursor-pointer"
+          />
         </div>
         <h2 className="text-center text-black font-bold text-xl mt-2">
           Your Cart is Empty
@@ -26,6 +35,10 @@ const Cart = () => {
             Checkout
           </button>
         </div>
+      </div>
+       <div className="p-3 bg-gray-200 rounded-full fixed bottom-1 right-4">
+        <IoMdCart onClick={(()=>setActiveCart(!activeCart))} className="text-3xl"/>
+
       </div>
     </>
   );
