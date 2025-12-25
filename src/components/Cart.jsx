@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { MdCancel } from "react-icons/md";
 import ItemCard from "./ItemCard";
 import { IoMdCart } from "react-icons/io";
-
+import { useSelector } from "react-redux";
 
 const Cart = () => {
   const [activeCart, setActiveCart] = useState(false);
+  const cartItems = useSelector((state) => state.cart.cart);
+
 
   return (
     <>
@@ -21,11 +23,23 @@ const Cart = () => {
             className="border p-1 text-xl rounded-md hover:text-red-500 hover:cursor-pointer"
           />
         </div>
-        <h2 className="text-center text-black font-bold text-xl mt-2">
+         {Cart.length > 0 ? `<h2 className="text-center text-black font-bold text-xl mt-2">
           Your Cart is Empty
-        </h2>
-        <ItemCard />
-        <ItemCard />
+        </h2>` :  "c" }
+        {cartItems.map((food) => {
+          return (
+            <ItemCard
+              key={food.id}
+              id={food.id}
+              img={food.img}
+              name={food.name}
+              price={food.price}
+              desc={food.desc}
+              rating={food.rating}
+              qty={food.qty}
+            />
+          );
+        })}
 
         <div className="absolute bottom-4 ">
           <h2 className="text-xl font-bold text-gray-700">Items: 0</h2>
@@ -36,9 +50,11 @@ const Cart = () => {
           </button>
         </div>
       </div>
-       <div className="p-3 bg-gray-200 rounded-full fixed bottom-1 right-4">
-        <IoMdCart onClick={(()=>setActiveCart(!activeCart))} className="text-3xl"/>
-
+      <div className="p-3 bg-gray-200 rounded-full fixed bottom-1 right-4">
+        <IoMdCart
+          onClick={() => setActiveCart(!activeCart)}
+          className="text-3xl"
+        />
       </div>
     </>
   );
